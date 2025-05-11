@@ -1,0 +1,13 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "dotnet",
+            "task": "build C:\\Users\\Amante\\source\\repos\\criticalsession\\StreetPhotoConverter\\StreetPhotoConverter.Console\\StreetPhotoConverter.Console.csproj -c Release",
+            "file": "C:\\Users\\Amante\\source\\repos\\criticalsession\\StreetPhotoConverter\\StreetPhotoConverter.Console\\StreetPhotoConverter.Console.csproj",
+            "group": "build",
+            "problemMatcher": [],
+            "label": "dotnet: build C:\\Users\\Amante\\source\\repos\\criticalsession\\StreetPhotoConverter\\StreetPhotoConverter.Console\\StreetPhotoConverter.Console.csproj"
+        }
+    ]
+}
