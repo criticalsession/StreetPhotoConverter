@@ -2,6 +2,9 @@
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 using Spectre.Console;
+using Spectre.Console.Rendering;
+
+Log("[bold green]Street Photo Converter[/] - [dim]v1.0 by [/][bold dim]CriticalSession[/]\r\n");
 
 if (!Directory.Exists("input"))
 {
@@ -19,6 +22,13 @@ if (!Directory.Exists("output"))
 
 var validExtensions = new[] { ".jpg", ".jpeg", ".webp", ".png" };
 var files = Directory.GetFiles("input").Where(file => validExtensions.Contains(Path.GetExtension(file).ToLower())).ToList();
+
+if (files.Count == 0) {
+    Log("No valid image files found in the [bold]'input'[/] directory.");
+    Log("[dim]Press Enter to exit[/]");
+    Console.ReadLine();
+    return;
+}
 
 files.ForEach(file =>
 {

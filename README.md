@@ -1,6 +1,6 @@
-# StreetPhotoConverter  
+# Street Photo Converter  
 
-StreetPhotoConverter is a console application that processes images in an `input` directory, applies various transformations, and saves the processed images to the `output` directory. The transformations aim to create an effect suitable for street photography.
+**Street Photo Converter** is a console application that processes images in an `input` directory, applies various transformations, and saves the processed images to the `output` directory. The transformations aim to create an effect suitable for street photography.
 
 ![Sample](media/sample-04.jpeg)
 
