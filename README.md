@@ -1,6 +1,6 @@
 # StreetPhotoConverter  
 
-StreetPhotoConverter is a console application built with .NET 9 that processes images in the `input` directory, applies various transformations, and saves the processed images to the `output` directory.  
+StreetPhotoConverter is a console application that processes images in an `input` directory, applies various transformations, and saves the processed images to the `output` directory. The transformations aim to create an effect suitable for street photography.
 
 ## Features  
 - Adjusts brightness, contrast, and exposure of images.  
