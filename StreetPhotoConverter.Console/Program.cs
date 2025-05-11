@@ -1,18 +1,19 @@
 ﻿using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
+using Spectre.Console;
 
 if (!Directory.Exists("input"))
 {
-    Console.WriteLine("Please place input files in the 'input' directory.");
-    Console.WriteLine("Press Enter to exit");
+    Log("Please place input files in the [bold]'input'[/] directory.");
+    Log("[dim]Press Enter to exit[/]");
     Console.ReadLine();
     return;
 }
 
 if (!Directory.Exists("output"))
 {
-    Console.WriteLine("Creating directory 'output'");
+    Log("Creating directory [bold]'output'[/]");
     Directory.CreateDirectory("output");
 }
 
@@ -21,12 +22,11 @@ var files = Directory.GetFiles("input").Where(file => validExtensions.Contains(P
 
 files.ForEach(file =>
 {
-    Console.WriteLine($"Processing {file}");
+    Log($"Processing [bold green]{file}[/]");
     ProcessImage(file);
 });
 
-Console.WriteLine("Done");
-Console.WriteLine("Press Enter to exit");
+Log("\r\n[dim]Processing complete. Press Enter to exit.[/]");
 return;
 
 static void ProcessImage(string filePath)
@@ -36,9 +36,9 @@ static void ProcessImage(string filePath)
         var fileName = Path.GetFileName(filePath);
 
         var random = new Random();
-        var contrastBoost = 1.4f;   // +40%
+        var contrastBoost = 1.5f;   // +50%
         var brightnessAdjust = 0.9f; // -10%
-        var exposureMult = 1.05f; // +5%
+        var exposureMult = 1.1f; // +10%
 
         using (var image = Image.Load<Rgba32>(filePath))
         {
@@ -77,13 +77,15 @@ static void ProcessImage(string filePath)
                         pixel.G = ClampToByte(pixel.G * exposureMult);
                         pixel.B = ClampToByte(pixel.B * exposureMult);
 
+                        // Increase brightness if average luminance is low
                         if (averageLuminance < 0.3f)
                         {
-                            pixel.R = ClampToByte(pixel.R + 15);
-                            pixel.G = ClampToByte(pixel.G + 15);
-                            pixel.B = ClampToByte(pixel.B + 15);
+                            pixel.R = ClampToByte(pixel.R + 25);
+                            pixel.G = ClampToByte(pixel.G + 25);
+                            pixel.B = ClampToByte(pixel.B + 25);
                         }
 
+                        // Decrease brightness if average luminance is high
                         if (averageLuminance > 0.7f)
                         {
                             pixel.R = ClampToByte(pixel.R - 25);
@@ -94,7 +96,7 @@ static void ProcessImage(string filePath)
                         // Add noise 50%
                         if (random.Next(0, 2) == 1)
                         {
-                            var noiseAmount = random.Next(-30, 30);
+                            var noiseAmount = random.Next(-20, 20);
 
                             pixel.R = ClampToByte(pixel.R + noiseAmount);
                             pixel.G = ClampToByte(pixel.G + noiseAmount);
@@ -113,10 +115,13 @@ static void ProcessImage(string filePath)
     }
     catch (Exception ex)
     {
-        Console.WriteLine($"Error processing {filePath}: {ex.Message}");
-        Console.WriteLine("Press Enter to exit");
+        Log($"Error processing [green bold]{filePath}[/]: [red]{ex.Message}[/]");
+        Log("[dim]Press Enter to exit[/]");
         Console.ReadLine();
     }
 }
 
 static byte ClampToByte(float value) => (byte)Math.Clamp((int)value, 0, 255);
+static void Log(string msg) {
+    AnsiConsole.Markup($"{msg}\r\n");
+}
